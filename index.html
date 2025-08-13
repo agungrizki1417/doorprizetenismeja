@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Doorprize</title>
+<title>Doorprize Berurutan</title>
 <style>
   body, html {
     height: 100%;
@@ -109,6 +109,21 @@
   const spinBtn = document.getElementById('spin-button');
 
   let totalRotation = 0;
+  let winnerIndex = 0; // Index untuk melacak pemenang saat ini
+
+  // Daftar nama pemenang berurutan
+  const sequentialWinners = [
+    'Habibullah',
+    'Arida Zuhairoh',
+    'Siti Zulaikhah Kuntowati',
+    'Riska Pramita Hapsari',
+    'Imam Jajuli',
+    'Ahmad Faozan',
+    'Agung Rizki Maulana',
+    'dr. R. Sunarko Slamet',
+    'Ariyani Muldaningsih',
+    'Miyas Indra Utami'
+  ];
 
   const names = [
     'dr. R. Sunarko Slamet', 'Imam Jajuli', 'Wasikin', 'Tri Yuliani', 'Pramono', 
@@ -159,10 +174,40 @@
   function spin() {
     spinBtn.disabled = true;
 
-    // Menambahkan putaran baru ke total putaran sebelumnya
-    const spinDegrees = Math.floor(Math.random() * 360) + 3600; 
-    totalRotation += spinDegrees;
+    // Menentukan pemenang berikutnya dari daftar berurutan
+    const winnerName = sequentialWinners[winnerIndex];
+    const winningIndexInFullList = names.indexOf(winnerName);
+
+    // Menghitung putaran yang tepat untuk mendarat di pemenang
+    const degreesPerSlice = 360 / numNames;
+    
+    // Hitung posisi tengah dari segmen pemenang. Koordinat canvas: 0 derajat di kanan, 90 di bawah.
+    const winningSliceCenter = (winningIndexInFullList * degreesPerSlice) + (degreesPerSlice / 2);
+    
+    // Posisi jarum penunjuk di bagian atas, yang setara dengan 270 derajat
+    // dalam sistem koordinat canvas yang dimulai dari kanan.
+    const pointerPosition = 270;
+    
+    // Menghitung rotasi yang dibutuhkan agar roda berputar maju dan berhenti tepat di pemenang
+    const currentRotationMod360 = totalRotation % 360;
+    
+    // Perbaikan: Menghitung rotasi yang dibutuhkan dari posisi roda saat ini ke posisi pemenang
+    let rotationNeeded = (pointerPosition - winningSliceCenter);
+    
+    // Sesuaikan rotasi jika diperlukan untuk memastikan putaran maju dan lebih dari 360 derajat
+    rotationNeeded = (rotationNeeded - currentRotationMod360 + 360) % 360;
+    if (rotationNeeded < 0) {
+        rotationNeeded += 360;
+    }
+    
+    // Putaran dasar yang besar agar roda berputar beberapa kali untuk efek visual
+    const baseRotation = 3600;
+    totalRotation += baseRotation + rotationNeeded;
+    
     canvas.style.transform = `rotate(${totalRotation}deg)`;
+
+    // Mengatur pemenang berikutnya untuk putaran selanjutnya
+    winnerIndex = (winnerIndex + 1) % sequentialWinners.length;
 
     setTimeout(() => {
       spinBtn.disabled = false;
