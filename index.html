@@ -3,42 +3,28 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Background Blur</title>
-<style>
-  body, html {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-
-  /* Lapisan background gambar blur */
-  .background {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('https://github.com/agungrizki1417/doorprizetenismeja/raw/main/PUSKESMAS.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    filter: blur(8px);
-    z-index: -1;
-  }
-
-  /* Konten di atas background */
-  .content {
-    position: relative;
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
-</style>
+<title>Roda Putar Doorprize</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="background"></div>
 
 <div class="content">
-  <h1>RODA PUTAR DOORPRIZE TENIS MEJA PUSKESMAS PETANAHAN</h1>
-  <p>Tambahkan elemen lain di sini.</p>
+  <h1>RODA PUTAR DOORPRIZE TENIS MEJA PUSKESMAS PETANAHAN</h1>
+  
+  <div class="wheel-container">
+    <canvas id="spinwheel" width="600" height="600"></canvas>
+    <div class="arrow"></div>
+    <button id="spin-button">PUTAR!</button>
+  </div>
+
+  <div class="winner-box">
+    <h3>Pemenang Hari Ini:</h3>
+    <p id="result">Tekan tombol 'PUTAR!' untuk memulai.</p>
+  </div>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>
-
