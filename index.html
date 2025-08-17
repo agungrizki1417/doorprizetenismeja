@@ -5,118 +5,118 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doorprize Pong-pong</title>
 <style>
-  body, html {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
 
-  /* Layer background buram */
-  .background-blur {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('https://github.com/agungrizki1417/doorprizetenismeja/raw/main/PUSKESMAS.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    filter: blur(8px);
-    z-index: -1;
-  }
+  /* Layer background buram */
+  .background-blur {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('https://github.com/agungrizki1417/doorprizetenismeja/raw/main/PUSKESMAS.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(8px);
+    z-index: -1;
+  }
 
-  .container {
-    text-align: center;
-    padding-top: 50px;
-  }
+  .container {
+    text-align: center;
+    padding-top: 50px;
+  }
 
-  .title {
-    color: green;
-    font-size: 24px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  }
+  .title {
+    color: green;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
 
-  /* Gaya untuk container roda putar */
-  .wheel-container {
-    position: relative;
-    display: inline-block;
-    margin: 20px 0;
-  }
+  /* Gaya untuk container roda putar */
+  .wheel-container {
+    position: relative;
+    display: inline-block;
+    margin: 20px 0;
+  }
 
-  /* Gaya untuk canvas roda */
-  #spinwheel {
-    border: 5px solid #fff;
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    transition: transform 10s cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
+  /* Gaya untuk canvas roda */
+  #spinwheel {
+    border: 5px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    transition: transform 10s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
 
-  /* Tombol putar */
-  #spin-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 20px 30px;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 50px;
-    transition: background-color 0.3s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  }
+  /* Tombol putar */
+  #spin-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 20px 30px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
 
-  #spin-button:hover {
-    background-color: #c0392b;
-  }
+  #spin-button:hover {
+    background-color: #c0392b;
+  }
 
-  #spin-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
+  #spin-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 
-  /* Panah penunjuk */
-  .arrow {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-top: 30px solid #e74c3c;
-  }
+  /* Panah penunjuk */
+  .arrow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 30px solid #e74c3c;
+  }
 
-  /* Kotak pemenang */
-  .winner-display {
-      margin-top: 20px;
-      padding: 20px;
-      background-color: rgba(255, 255, 255, 0.3); /* Transparan */
-      border-radius: 10px;
-      color: white;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px); /* Untuk Safari */
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      display: none; /* Sembunyikan secara default */
-      transition: opacity 1s ease;
-  }
+  /* Kotak pemenang */
+  .winner-display {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.3); /* Transparan */
+      border-radius: 10px;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px); /* Untuk Safari */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      display: none; /* Sembunyikan secara default */
+      transition: opacity 1s ease;
+  }
 
-  .winner-display h2 {
-      font-size: 30px;
-      margin: 0;
-  }
+  .winner-display h2 {
+      font-size: 30px;
+      margin: 0;
+  }
 
-  /* CSS untuk animasi kembang api */
-  @keyframes fireworkBurst {
-      0% { transform: scale(0.1); opacity: 1; }
-      50% { transform: scale(1.5); opacity: 0.8; }
-      100% { transform: scale(2.0); opacity: 0; }
-  }
+  /* CSS untuk animasi kembang api */
+  @keyframes fireworkBurst {
+      0% { transform: scale(0.1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.8; }
+      100% { transform: scale(2.0); opacity: 0; }
+  }
 </style>
 </head>
 <body>
@@ -124,279 +124,266 @@
 <div class="background-blur"></div>
 
 <div class="container">
-  <h1 class="title">🎁 RODA PUTAR DOORPRIZE TENIS MEJA PUSKESMAS PETANAHAN 🎁</h1>
-  
-  <div class="wheel-container">
-    <canvas id="spinwheel" width="600" height="600"></canvas>
-    <div class="arrow"></div>
-    <button id="spin-button">PUTAR!</button>
-  </div>
+  <h1 class="title">🎁 RODA PUTAR DOORPRIZE TENIS MEJA PUSKESMAS PETANAHAN 🎁</h1>
+  
+  <div class="wheel-container">
+    <canvas id="spinwheel" width="600" height="600"></canvas>
+    <div class="arrow"></div>
+    <button id="spin-button">PUTAR!</button>
+  </div>
 
-  <!-- Kotak untuk menampilkan nama pemenang -->
-  <div id="winner-box" class="winner-display">
-      <h2>Sing menang: <span id="winner-name"></span></h2>
-  </div>
+    <div id="winner-box" class="winner-display">
+      <h2>Sing menang: <span id="winner-name"></span></h2>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
 
 <script>
-  const canvas = document.getElementById('spinwheel');
-  const ctx = canvas.getContext('2d');
-  const spinBtn = document.getElementById('spin-button');
-  const winnerBox = document.getElementById('winner-box');
-  const winnerNameElement = document.getElementById('winner-name');
+  const canvas = document.getElementById('spinwheel');
+  const ctx = canvas.getContext('2d');
+  const spinBtn = document.getElementById('spin-button');
+  const winnerBox = document.getElementById('winner-box');
+  const winnerNameElement = document.getElementById('winner-name');
 
-  let totalRotation = 0;
+  let totalRotation = 0;
 
-  // Efek suara putaran roda ('pusing' kartun)
-  const spinSynth = new Tone.Synth({
-    oscillator: { type: "sine" },
-    envelope: {
-      attack: 0.01,
-      decay: 0.1,
-      sustain: 0.5,
-      release: 0.5
-    }
-  }).toDestination();
+  // Efek suara putaran roda ('pusing' kartun)
+  const spinSynth = new Tone.Synth({
+    oscillator: { type: "sine" },
+    envelope: {
+      attack: 0.01,
+      decay: 0.1,
+      sustain: 0.5,
+      release: 0.5
+    }
+  }).toDestination();
 
-  const lfo = new Tone.LFO({
-    frequency: 10,
-    amplitude: 0.8,
-    min: 200,
-    max: 800
-  }).connect(spinSynth.frequency);
+  const lfo = new Tone.LFO({
+    frequency: 10,
+    amplitude: 0.8,
+    min: 200,
+    max: 800
+  }).connect(spinSynth.frequency);
 
-  // OPSI EFEK SUARA KEMENANGAN (Pilih salah satu dengan menghapus "//")
-  // ====================================================================
+  // OPSI EFEK SUARA KEMENANGAN (Pilih salah satu dengan menghapus "//")
+  // ====================================================================
 
-  // Opsi 1 (Standar): Terompet Fanfare Klasik
-  const trumpetSynth = new Tone.Synth({
-    oscillator: { type: "sine" },
-    envelope: {
-      attack: 0.05,
-      decay: 0.2,
-      sustain: 0.3,
-      release: 0.5
-    }
-  }).toDestination();
-  const trumpetFanfare = [
-    { note: "C4", time: "0" },
-    { note: "G4", time: "0.4" },
-    { note: "C5", time: "0.8" },
-    { note: "G5", time: "1.2" },
-    { note: "C6", time: "1.6" }
-  ];
-  
-  // Opsi 2: Jingle Kemenangan yang Lebih Ceria
-  // Gunakan ini untuk suara yang lebih "game show"
-  const jingleSynth = new Tone.PolySynth(Tone.Synth, {
-      oscillator: { type: "triangle" },
-      envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.5 }
-  }).toDestination();
-  const jingleMelody = [
-      { note: "G4", time: "0" },
-      { note: "A4", time: "0.2" },
-      { note: "G5", time: "0.4" },
-      { note: "C5", time: "0.6" }
-  ];
+  // Opsi 1 (Standar): Terompet Fanfare Klasik
+  const trumpetSynth = new Tone.Synth({
+    oscillator: { type: "sine" },
+    envelope: {
+      attack: 0.05,
+      decay: 0.2,
+      sustain: 0.3,
+      release: 0.5
+    }
+  }).toDestination();
+  const trumpetFanfare = [
+    { note: "C4", time: "0" },
+    { note: "G4", time: "0.4" },
+    { note: "C5", time: "0.8" },
+    { note: "G5", time: "1.2" },
+    { note: "C6", time: "1.6" }
+  ];
+  
+  // Opsi 2: Jingle Kemenangan yang Lebih Ceria
+  // Gunakan ini untuk suara yang lebih "game show"
+  const jingleSynth = new Tone.PolySynth(Tone.Synth, {
+      oscillator: { type: "triangle" },
+      envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.5 }
+  }).toDestination();
+  const jingleMelody = [
+      { note: "G4", time: "0" },
+      { note: "A4", time: "0.2" },
+      { note: "G5", time: "0.4" },
+      { note: "C5", time: "0.6" }
+  ];
 
-  // Opsi 3: Kemenangan yang Triumfan dengan Ledakan
-  // Gabungkan melodi terompet dengan efek drum untuk kesan lebih besar
-  const dramaticSynth = new Tone.PolySynth(Tone.Synth, {
-      oscillator: { type: "sawtooth" },
-      envelope: { attack: 0.05, decay: 0.5, sustain: 0.1, release: 0.8 }
-  }).toDestination();
-  const dramaticFanfare = [
-      { note: "C4", time: "0" },
-      { note: "F4", time: "0.4" },
-      { note: "A4", time: "0.8" },
-      { note: "C5", time: "1.2" }
-  ];
-  const dramaticBang = new Tone.MembraneSynth().toDestination();
+  // Opsi 3: Kemenangan yang Triumfan dengan Ledakan
+  // Gabungkan melodi terompet dengan efek drum untuk kesan lebih besar
+  const dramaticSynth = new Tone.PolySynth(Tone.Synth, {
+      oscillator: { type: "sawtooth" },
+      envelope: { attack: 0.05, decay: 0.5, sustain: 0.1, release: 0.8 }
+  }).toDestination();
+  const dramaticFanfare = [
+      { note: "C4", time: "0" },
+      { note: "F4", time: "0.4" },
+      { note: "A4", time: "0.8" },
+      { note: "C5", time: "1.2" }
+  ];
+  const dramaticBang = new Tone.MembraneSynth().toDestination();
 
 
-  // Mulai audio context agar Tone.js bisa bekerja
-  document.documentElement.addEventListener("mousedown", () => {
-    if (Tone.context.state !== "running") {
-      Tone.start();
-    }
-  });
+  // Mulai audio context agar Tone.js bisa bekerja
+  document.documentElement.addEventListener("mousedown", () => {
+    if (Tone.context.state !== "running") {
+      Tone.start();
+    }
+  });
 
-  // --- MENGUBAH `const` MENJADI `let` AGAR DAFTAR BISA DIUBAH ---
-  let names = [
-    'dr. R. Sunarko Slamet', 'Imam Jajuli', 'Wasikin', 'Tri Yuliani', 'Pramono', 
-    'Sugiyati', 'Siti Zulaikhah Kuntowati', 'Arida Zuhairoh', 'Riska Pramita Hapsari', 
-    'Suryanti', 'Ariyani Muldaningsih', 'Istiqomah', 'Sulsi Astuti', 'Suharjono', 
-    'Ratna Andriyani', 'Romeli', 'Maryanti', 'Nur Setiyani', 'dr. Ratna Prabawati Nopiutami', 
-    'Diyana Susanti', 'Faoji', 'M. Noer', 'Agung Rizki Maulana', 'Habibullah', 
-    'Rifkhi Anisa Wijayanti', 'Ahmad Faozan', 'Miyas Indra Utami', 'Ayu Indrarti', 
-    'Habibiena Noviyanti', 'Fitri Nurkhasanah', 'Sunarmono Maulud', 'Fitriyanah', 
-    'Yusup Kurniawan', 'Haryanto', 'Fahmi Fajarwati', 'dr. Muhammad Daffa Ramadhan', 
-    'Joko Susilo', 'Kesyia Ayuni Asnidatama', 'Faisal Azis Sofian', 'Haryono'
-  ];
+  // --- MENGUBAH `const` MENJADI `let` AGAR DAFTAR BISA DIUBAH ---
+  let names = [
+    'dr. R. Sunarko Slamet', 'Imam Jajuli', 'Wasikin', 'Tri Yuliani', 'Pramono', 
+    'Sugiyati', 'Siti Zulaikhah Kuntowati', 'Arida Zuhairoh', 'Riska Pramita Hapsari', 
+    'Suryanti', 'Ariyani Muldaningsih', 'Istiqomah', 'Sulsi Astuti', 'Suharjono', 
+    'Ratna Andriyani', 'Romeli', 'Maryanti', 'Nur Setiyani', 'dr. Ratna Prabawati Nopiutami', 
+    'Diyana Susanti', 'Faoji', 'M. Noer', 'Agung Rizki Maulana', 'Habibullah', 
+    'Rifkhi Anisa Wijayanti', 'Ahmad Faozan', 'Miyas Indra Utami', 'Ayu Indrarti', 
+    'Habibiena Noviyanti', 'Fitri Nurkhasanah', 'Sunarmono Maulud', 'Fitriyanah', 
+    'Yusup Kurniawan', 'Haryanto', 'Fahmi Fajarwati', 'dr. Muhammad Daffa Ramadhan', 
+    'Joko Susilo', 'Kesyia Ayuni Asnidatama', 'Faisal Azis Sofian', 'Haryono'
+  ];
 
-  const colors = [
-    '#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1', 
-    '#955251', '#B565A7', '#009B77', '#DD4124', '#D64161', 
-    '#FF7B25', '#C7D3D4', '#E27D60', '#A9A9A9', '#C0C0C0', 
-    '#F4E1D2', '#EDC7B7', '#B3A369', '#E0B589', '#C83349'
-  ];
+  const colors = [
+    '#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1', 
+    '#955251', '#B565A7', '#009B77', '#DD4124', '#D64161', 
+    '#FF7B25', '#C7D3D4', '#E27D60', '#A9A9A9', '#C0C0C0', 
+    '#F4E1D2', '#EDC7B7', '#B3A369', '#E0B589', '#C83349'
+  ];
 
-  function drawWheel() {
-    // Hapus konten canvas yang lama sebelum menggambar ulang
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const numNames = names.length;
-    
-    // Jika tidak ada nama lagi, tampilkan pesan
-    if (numNames === 0) {
-        ctx.fillStyle = "#fff";
-        ctx.font = "30px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("Semua sudah menang!", 300, 300);
-        spinBtn.disabled = true;
-        return;
-    }
+  function drawWheel() {
+    // Hapus konten canvas yang lama sebelum menggambar ulang
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const numNames = names.length;
+    
+    // Jika tidak ada nama lagi, tampilkan pesan
+    if (numNames === 0) {
+        ctx.fillStyle = "#fff";
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Semua sudah menang!", 300, 300);
+        spinBtn.disabled = true;
+        return;
+    }
 
-    const arcSize = (2 * Math.PI) / numNames;
-    for (let i = 0; i < numNames; i++) {
-      const angle = i * arcSize;
-      
-      ctx.beginPath();
-      ctx.arc(300, 300, 300, angle, angle + arcSize);
-      ctx.lineTo(300, 300);
-      
-      const colorIndex = i % colors.length;
-      ctx.fillStyle = colors[colorIndex];
-      ctx.fill();
+    const arcSize = (2 * Math.PI) / numNames;
+    for (let i = 0; i < numNames; i++) {
+      const angle = i * arcSize;
+      
+      ctx.beginPath();
+      ctx.arc(300, 300, 300, angle, angle + arcSize);
+      ctx.lineTo(300, 300);
+      
+      const colorIndex = i % colors.length;
+      ctx.fillStyle = colors[colorIndex];
+      ctx.fill();
 
-      // Menggambar teks nama
-      ctx.save();
-      ctx.translate(300, 300);
-      ctx.rotate(angle + arcSize / 2);
-      ctx.textAlign = 'right';
-      ctx.fillStyle = '#fff';
-      ctx.font = '20px Arial';
-      ctx.fillText(names[i], 280, 10);
-      ctx.restore();
-    }
-  }
+      // Menggambar teks nama
+      ctx.save();
+      ctx.translate(300, 300);
+      ctx.rotate(angle + arcSize / 2);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#fff';
+      ctx.font = '20px Arial';
+      ctx.fillText(names[i], 280, 10);
+      ctx.restore();
+    }
+  }
 
-  // Fungsi untuk membuat animasi kembang api
-  function showFireworks() {
-      for (let i = 0; i < 50; i++) {
-          const firework = document.createElement('div');
-          firework.style.position = 'absolute';
-          firework.style.width = '10px';
-          firework.style.height = '10px';
-          firework.style.borderRadius = '50%';
-          firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-          firework.style.boxShadow = `0 0 10px 5px hsl(${Math.random() * 360}, 100%, 50%)`;
-          
-          const offsetX = (Math.random() - 0.5) * 600;
-          const offsetY = (Math.random() - 0.5) * 600;
-          firework.style.left = `calc(50% + ${offsetX}px)`;
-          firework.style.top = `calc(50% + ${offsetY}px)`;
-          
-          firework.style.animation = `fireworkBurst 5s ease-out forwards`;
-          firework.style.animationDelay = `${Math.random() * 1}s`;
-          firework.style.zIndex = 10;
-          
-          document.body.appendChild(firework);
-          
-          setTimeout(() => {
-              firework.remove();
-          }, 5000);
-      }
-  }
+  // Fungsi untuk membuat animasi kembang api
+  function showFireworks() {
+      for (let i = 0; i < 50; i++) {
+          const firework = document.createElement('div');
+          firework.style.position = 'absolute';
+          firework.style.width = '10px';
+          firework.style.height = '10px';
+          firework.style.borderRadius = '50%';
+          firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          firework.style.boxShadow = `0 0 10px 5px hsl(${Math.random() * 360}, 100%, 50%)`;
+          
+          const offsetX = (Math.random() - 0.5) * 600;
+          const offsetY = (Math.random() - 0.5) * 600;
+          firework.style.left = `calc(50% + ${offsetX}px)`;
+          firework.style.top = `calc(50% + ${offsetY}px)`;
+          
+          firework.style.animation = `fireworkBurst 5s ease-out forwards`;
+          firework.style.animationDelay = `${Math.random() * 1}s`;
+          firework.style.zIndex = 10;
+          
+          document.body.appendChild(firework);
+          
+          setTimeout(() => {
+              firework.remove();
+          }, 5000);
+      }
+  }
 
-  function spin() {
-    spinBtn.disabled = true;
-    winnerBox.style.display = 'none';
+  function spin() {
+    spinBtn.disabled = true;
+    winnerBox.style.display = 'none';
 
-    // Periksa apakah masih ada nama
-    if (names.length === 0) {
-        winnerNameElement.textContent = "Tidak ada peserta lagi!";
-        winnerBox.style.display = 'block';
-        spinBtn.disabled = true;
-        return;
-    }
+    if (names.length === 0) {
+        winnerNameElement.textContent = "Tidak ada peserta lagi!";
+        winnerBox.style.display = 'block';
+        spinBtn.disabled = true;
+        return;
+    }
 
-    // Memulai suara putaran
-    lfo.start();
-    spinSynth.triggerAttack("C5");
+    lfo.start();
+    spinSynth.triggerAttack("C5");
 
-    // Pilih indeks pemenang secara acak dari DAFTAR NAMA SAAT INI
-    const winningIndexInFullList = Math.floor(Math.random() * names.length);
-    const winnerName = names[winningIndexInFullList];
+    const numNames = names.length;
+    const degreesPerSlice = 360 / numNames;
+    
+    // Tambahkan rotasi acak antara 10-15 putaran penuh
+    const randomRotation = Math.floor(Math.random() * 360);
+    const baseRotation = 360 * 10;
+    totalRotation += baseRotation + randomRotation;
+    
+    canvas.style.transform = `rotate(${totalRotation}deg)`;
 
-    const numNames = names.length;
-    const degreesPerSlice = 360 / numNames;
-    const winningSliceCenter = (winningIndexInFullList * degreesPerSlice) + (degreesPerSlice / 2);
-    const pointerPosition = 270;
-    
-    const currentRotationMod360 = totalRotation % 360;
-    let rotationNeeded = (pointerPosition - winningSliceCenter);
-    
-    rotationNeeded = (rotationNeeded - currentRotationMod360 + 360) % 360;
-    if (rotationNeeded < 0) {
-        rotationNeeded += 360;
-    }
-    
-    const baseRotation = 3600;
-    totalRotation += baseRotation + rotationNeeded;
-    
-    canvas.style.transform = `rotate(${totalRotation}deg)`;
+    setTimeout(() => {
+      lfo.stop();
+      spinSynth.triggerRelease();
+      playDramaticFanfare();
+      showFireworks();
 
-    setTimeout(() => {
-      // Menghentikan suara putaran
-      lfo.stop();
-      spinSynth.triggerRelease();
+      // Hitung nama pemenang dari posisi akhir roda
+      const finalAngle = totalRotation % 360;
+      const pointerOffset = 270;
+      const adjustedAngle = (finalAngle + pointerOffset) % 360;
+      let winningIndex = Math.floor(adjustedAngle / degreesPerSlice);
 
-      // Panggil FUNGSI SUARA KEMENANGAN YANG ANDA PILIH
-      playDramaticFanfare();
-      
-      showFireworks();
+      // Tangani kasus di mana indeks melebihi jumlah nama
+      if (winningIndex >= names.length) {
+        winningIndex = names.length - 1;
+      }
+      
+      const winnerName = names[winningIndex];
 
-      // Tampilkan nama pemenang
-      winnerNameElement.textContent = winnerName;
-      winnerBox.style.display = 'block';
-      spinBtn.disabled = false;
+      winnerNameElement.textContent = winnerName;
+      winnerBox.style.display = 'block';
+      spinBtn.disabled = false;
+      names.splice(winningIndex, 1);
+      drawWheel();
+    }, 10000);  
+  }
+  
+  // Fungsi untuk Opsi 1: Terompet Fanfare Klasik
+  function playTrumpetFanfare() {
+      trumpetFanfare.forEach((event) => {
+          trumpetSynth.triggerAttackRelease(event.note, "0.4", Tone.now() + parseFloat(event.time));
+      });
+  }
+  
+  // Fungsi untuk Opsi 2: Jingle Kemenangan
+  function playJingleMelody() {
+      jingleMelody.forEach((event) => {
+          jingleSynth.triggerAttackRelease(event.note, "0.4", Tone.now() + parseFloat(event.time));
+      });
+  }
+  
+  // Fungsi untuk Opsi 3: Kemenangan Triumfan dengan Ledakan
+  function playDramaticFanfare() {
+      dramaticFanfare.forEach((event) => {
+          dramaticSynth.triggerAttackRelease(event.note, "0.4", Tone.now() + parseFloat(event.time));
+      });
+      dramaticBang.triggerAttackRelease("C1", "8n", Tone.now() + 1.2);
+  }
 
-      // --- MENGHAPUS NAMA PEMENANG DARI DAFTAR ---
-      names.splice(winningIndexInFullList, 1);
-      
-      // Menggambar ulang roda tanpa nama pemenang
-      drawWheel();
-
-    }, 10000);  
-  }
-  
-  // Fungsi untuk Opsi 1: Terompet Fanfare Klasik
-  function playTrumpetFanfare() {
-      trumpetFanfare.forEach((event) => {
-          trumpetSynth.triggerAttackRelease(event.note, "0.4", Tone.now() + parseFloat(event.time));
-      });
-  }
-  
-  // Fungsi untuk Opsi 2: Jingle Kemenangan
-  function playJingleMelody() {
-      jingleMelody.forEach((event) => {
-          jingleSynth.triggerAttackRelease(event.note, "0.4", Tone.now() + parseFloat(event.time));
-      });
-  }
-  
-  // Fungsi untuk Opsi 3: Kemenangan Triumfan dengan Ledakan
-  function playDramaticFanfare() {
-      dramaticFanfare.forEach((event) => {
-          dramaticSynth.triggerAttackRelease(event.note, "0.4", Tone.now() + parseFloat(event.time));
-      });
-      dramaticBang.triggerAttackRelease("C1", "8n", Tone.now() + 1.2);
-  }
-
-  spinBtn.addEventListener('click', spin);
-  drawWheel();
+  spinBtn.addEventListener('click', spin);
+  drawWheel();
 </script>
 </body>
 </html>
-
