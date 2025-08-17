@@ -11,7 +11,7 @@
     font-family: Arial, sans-serif;
   }
 
-  /* Lapisan background buram */
+  /* Layer background buram */
   .background-blur {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -148,7 +148,6 @@
   const winnerNameElement = document.getElementById('winner-name');
 
   let totalRotation = 0;
-  let winnerIndex = 0;
 
   // Efek suara putaran roda ('pusing' kartun)
   const spinSynth = new Tone.Synth({
@@ -224,24 +223,8 @@
     }
   });
 
-  // Daftar nama pemenang berurutan
-  const sequentialWinners = [
-    'Habibullah',
-    'Arida Zuhairoh',
-    'Siti Zulaikhah Kuntowati',
-    'Riska Pramita Hapsari',
-    'Imam Jajuli',
-    'Ahmad Faozan',
-    'Agung Rizki Maulana',
-    'dr. R. Sunarko Slamet',
-    'Ariyani Muldaningsih',
-    'Tri Yuliani',
-    'dr. Ratna Prabawati Nopiutami',
-    'Faoji',
-    'Miyas Indra Utami'
-  ];
-
-  const names = [
+  // --- MENGUBAH `const` MENJADI `let` AGAR DAFTAR BISA DIUBAH ---
+  let names = [
     'dr. R. Sunarko Slamet', 'Imam Jajuli', 'Wasikin', 'Tri Yuliani', 'Pramono', 
     'Sugiyati', 'Siti Zulaikhah Kuntowati', 'Arida Zuhairoh', 'Riska Pramita Hapsari', 
     'Suryanti', 'Ariyani Muldaningsih', 'Istiqomah', 'Sulsi Astuti', 'Suharjono', 
@@ -260,10 +243,22 @@
     '#F4E1D2', '#EDC7B7', '#B3A369', '#E0B589', '#C83349'
   ];
 
-  const numNames = names.length;
-  const arcSize = (2 * Math.PI) / numNames;
-
   function drawWheel() {
+    // Hapus konten canvas yang lama sebelum menggambar ulang
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const numNames = names.length;
+    
+    // Jika tidak ada nama lagi, tampilkan pesan
+    if (numNames === 0) {
+        ctx.fillStyle = "#fff";
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Semua sudah menang!", 300, 300);
+        spinBtn.disabled = true;
+        return;
+    }
+
+    const arcSize = (2 * Math.PI) / numNames;
     for (let i = 0; i < numNames; i++) {
       const angle = i * arcSize;
       
@@ -319,13 +314,23 @@
     spinBtn.disabled = true;
     winnerBox.style.display = 'none';
 
+    // Periksa apakah masih ada nama
+    if (names.length === 0) {
+        winnerNameElement.textContent = "Tidak ada peserta lagi!";
+        winnerBox.style.display = 'block';
+        spinBtn.disabled = true;
+        return;
+    }
+
     // Memulai suara putaran
     lfo.start();
     spinSynth.triggerAttack("C5");
 
-    const winnerName = sequentialWinners[winnerIndex];
-    const winningIndexInFullList = names.indexOf(winnerName);
+    // Pilih indeks pemenang secara acak dari DAFTAR NAMA SAAT INI
+    const winningIndexInFullList = Math.floor(Math.random() * names.length);
+    const winnerName = names[winningIndexInFullList];
 
+    const numNames = names.length;
     const degreesPerSlice = 360 / numNames;
     const winningSliceCenter = (winningIndexInFullList * degreesPerSlice) + (degreesPerSlice / 2);
     const pointerPosition = 270;
@@ -343,28 +348,28 @@
     
     canvas.style.transform = `rotate(${totalRotation}deg)`;
 
-    winnerIndex = (winnerIndex + 1) % sequentialWinners.length;
-
     setTimeout(() => {
-      spinBtn.disabled = false;
-      
       // Menghentikan suara putaran
       lfo.stop();
       spinSynth.triggerRelease();
 
-      // Panggil FUNGSI SUARA YANG ANDA PILIH DI SINI
-      // Cukup hapus komentar di salah satu baris di bawah:
+      // Panggil FUNGSI SUARA KEMENANGAN YANG ANDA PILIH
+      playDramaticFanfare();
       
-      // playTrumpetFanfare(); // Opsi 1
-      // playJingleMelody(); // Opsi 2
-      playDramaticFanfare(); // Opsi 3 - Ini yang saya pilih sebagai default
-
       showFireworks();
 
       // Tampilkan nama pemenang
       winnerNameElement.textContent = winnerName;
       winnerBox.style.display = 'block';
-    }, 10000); 
+      spinBtn.disabled = false;
+
+      // --- MENGHAPUS NAMA PEMENANG DARI DAFTAR ---
+      names.splice(winningIndexInFullList, 1);
+      
+      // Menggambar ulang roda tanpa nama pemenang
+      drawWheel();
+
+    }, 10000);  
   }
   
   // Fungsi untuk Opsi 1: Terompet Fanfare Klasik
