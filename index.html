@@ -326,7 +326,7 @@
     const numNames = names.length;
     const degreesPerSlice = 360 / numNames;
     
-    // Tambahkan rotasi acak antara 10-15 putaran penuh
+    // Tambahkan rotasi acak
     const randomRotation = Math.floor(Math.random() * 360);
     const baseRotation = 360 * 10;
     totalRotation += baseRotation + randomRotation;
@@ -344,7 +344,7 @@
       const pointerOffset = 270;
       const adjustedAngle = (finalAngle + pointerOffset) % 360;
       let winningIndex = Math.floor(adjustedAngle / degreesPerSlice);
-
+      
       // Tangani kasus di mana indeks melebihi jumlah nama
       if (winningIndex >= names.length) {
         winningIndex = names.length - 1;
